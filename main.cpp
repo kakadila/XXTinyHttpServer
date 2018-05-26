@@ -33,7 +33,7 @@ class HttpRequest {
         {  
                 bool operator() (const char *a, const char *b) const  
                 {  
-                        return strcmp(a,b)==-1;
+                        return strcmp(a,b)<0;
                 }  
         };
         typedef std::map<char *,char *,char_comp> StringMap;
@@ -70,6 +70,7 @@ public:
 
         void ReSet()
         {
+				m_headers.clear();
                 m_pase_status = ParsBegin;
                 m_content_length = 0;
                 m_parse_len = 0;
