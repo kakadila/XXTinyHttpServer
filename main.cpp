@@ -168,7 +168,21 @@ private:
                 if(len + m_offset > m_capacity)
                 {
                         m_capacity = m_capacity + len + 12;
-                        m_data  = (char *)realloc(m_data,m_capacity);
+                        char *new_data  = (char *)realloc(m_data,m_capacity);
+						//如果mbuffer有relloc过，则指针的内容改变
+						if(new_data != m_data)
+						{
+							m_method = new_data + (m_method- m_data);
+							m_version = new_data +(m_version - m_data);
+							m_path   = new_data + (m_path - m_data);
+							for(StringMap::iterator it = m_headers.begin();
+								it!=m_headers.end();++it)
+							{
+								(char *&)(it->first) = new_data + (it->first - m_data);
+								it->second = new_data + (it->second - m_data);
+							}
+						}
+						m_data = new_data;
                 }
         }
 };
