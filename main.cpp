@@ -260,7 +260,7 @@ void *thread_fun(void * data)
         close(sockfd);
         return NULL;
 }
-登录，获取房间列表
+
 void checkerr(int ret,const char *str)
 {
         if(ret < 0){
